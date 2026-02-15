@@ -21,7 +21,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onTabChange, donations, onDonationC
   const touchEndX = useRef(0);
 
   useEffect(() => {
-    // Fetch daily inspiration
+    // Fetch daily inspiration using Gemini
     getDailyIslamicInspiration().then(setQuote);
 
     const updateCountdown = () => {
@@ -48,7 +48,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onTabChange, donations, onDonationC
     const sliderInterval = setInterval(() => setCurrentSlide(s => (s + 1) % BANNER_DATA.length), 6000);
     
     let donationInterval: any;
-    if (!isPaused) {
+    if (!isPaused && donations.length > 0) {
       donationInterval = setInterval(() => setDonationIndex(prev => (prev + 1) % donations.length), 4000);
     }
 
@@ -99,12 +99,16 @@ const HomeView: React.FC<HomeViewProps> = ({ onTabChange, donations, onDonationC
         </div>
       </div>
 
-      {/* 1. Recent Donations List (MOVED ABOVE INSPIRATION) */}
+      {/* 1. Recent Donations List - PLACED ABOVE INSPIRATION */}
       <div className="space-y-2.5">
         <div className="flex items-center justify-between px-2">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
             <h3 className="text-slate-500 text-[9px] font-black uppercase tracking-[0.2em]">সাম্প্রতিক অনুদান</h3>
+          </div>
+          <div className="flex items-center gap-1 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/10">
+            <span className="w-1 h-1 bg-emerald-400 rounded-full animate-ping"></span>
+            <span className="text-[7px] font-black text-emerald-400 uppercase tracking-tighter">LIVE</span>
           </div>
         </div>
         <div 
@@ -112,12 +116,13 @@ const HomeView: React.FC<HomeViewProps> = ({ onTabChange, donations, onDonationC
           onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; setIsPaused(true); }}
           onTouchEnd={() => { handleDonationSwipeEnd(); setTimeout(() => setIsPaused(false), 5000); }}
         >
-          {donations.map((donation, idx) => {
+          {donations.length > 0 ? donations.map((donation, idx) => {
             const isCurrent = donationIndex === idx;
             const isPrev = donationIndex === (idx === 0 ? donations.length - 1 : idx - 1);
             let animationClass = "translate-x-[120%] opacity-0 scale-75"; 
             if (isCurrent) animationClass = "translate-x-0 opacity-100 scale-100 z-10";
             if (isPrev) animationClass = "-translate-x-[120%] opacity-0 scale-75 z-0";
+            
             return (
               <div 
                 key={idx} 
@@ -142,12 +147,19 @@ const HomeView: React.FC<HomeViewProps> = ({ onTabChange, donations, onDonationC
                 </div>
               </div>
             );
-          })}
+          }) : (
+            <div className="glass-card w-full h-full rounded-2xl flex items-center justify-center border-white/5 italic text-slate-500 text-xs">
+              কোনো অনুদান পাওয়া যায়নি
+            </div>
+          )}
         </div>
       </div>
 
-      {/* 2. Verse of the Day (Gemini Powered) - MOVED BELOW DONATIONS */}
-      <div className="glass-card rounded-[28px] p-5 border-emerald-500/10 shadow-lg relative overflow-hidden bg-emerald-500/5">
+      {/* 2. Verse of the Day (Gemini Powered) - PLACED BELOW DONATIONS */}
+      <div className="glass-card rounded-[28px] p-5 border-emerald-500/10 shadow-lg relative overflow-hidden bg-emerald-500/5 group hover:border-emerald-500/20 transition-all">
+        <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none group-hover:scale-125 transition-transform">
+           <span className="text-4xl">🕌</span>
+        </div>
         <div className="flex items-center gap-2 mb-2.5">
           <span className="text-lg">📖</span>
           <h3 className="text-[10px] font-black uppercase tracking-widest text-emerald-400">আজকের অনুপ্রেরণা</h3>
