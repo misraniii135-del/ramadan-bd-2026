@@ -1,0 +1,10 @@
+
+{
+  "appId": "com.ramadan.premium2026",
+  "appName": "Ramadan 2026",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
+}
