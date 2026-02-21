@@ -1,0 +1,14 @@
+{
+  "name": "Ramadan 2026 Premium",
+  "short_name": "রমজান ২০২৬",
+  "description": "প্রিমিয়াম ইসলামিক রমজান অ্যাপ। সেহরি, ইফতার এবং ইসলামি সহকারী।",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}

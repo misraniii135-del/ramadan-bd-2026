@@ -1,0 +1,23 @@
+
+{
+  "name": "ramadan-premium-2026",
+  "version": "1.0.0",
+  "description": "Premium Ramadan Calendar and Islamic Assistant",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "html2canvas": "^1.4.1",
+    "@google/genai": "^1.41.0"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "typescript": "^5.0.0"
+  }
+}
